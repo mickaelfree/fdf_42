@@ -6,7 +6,7 @@
 /*   By: mickmart <mickmart@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 11:45:23 by mickmart          #+#    #+#             */
-/*   Updated: 2025/04/17 16:14:45 by mickmart         ###   ########.fr       */
+/*   Updated: 2025/04/18 16:13:39 by mickmart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ void	fill_matrice(char *line, t_fdf *fdf, int y)
 {
 	char	**split;
 
-	split = ft_split(line, ' ');
+	split = NULL;
+	split = ft_split(line, " ");
 	if (!split)
 		cleanup_exit(fdf, EXIT_FAILURE, "Invalid map dimensions");
 	fill_points(fdf->map, split, y);
@@ -73,7 +74,6 @@ void	parse_map(char *filename, t_fdf *fdf)
 	line = get_next_line(fd);
 	while (line && y < fdf->map->height)
 	{
-		__builtin_printf("line %d: %s\n", y, line);
 		fill_matrice(line, fdf, y++);
 		line = get_next_line(fd);
 	}

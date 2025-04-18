@@ -6,7 +6,7 @@
 /*   By: mickmart <mickmart@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 13:51:45 by mickmart          #+#    #+#             */
-/*   Updated: 2025/04/12 03:08:15 by mickmart         ###   ########.fr       */
+/*   Updated: 2025/04/18 16:03:45 by mickmart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,25 +81,27 @@ void	ft_add_save(char *save, ssize_t *read_otc, int fd)
 
 char	*get_next_line(int fd)
 {
-	static char	save[BUFFER_SIZE + 1];
+	static char	save[1024][BUFFER_SIZE + 1];
 	char		*line;
 	ssize_t		find_nl;
 	ssize_t		read_otc;
 
+	if (fd < 0 || fd >= 1024 || BUFFER_SIZE <= 0)
+		return (NULL);
 	line = NULL;
 	read_otc = 1;
 	find_nl = -1;
 	while (read_otc != 0 && find_nl == -1)
 	{
-		if (!*save)
-			ft_add_save(save, &read_otc, fd);
+		if (!save[fd][0])
+			ft_add_save(save[fd], &read_otc, fd);
 		if (read_otc == -1)
 			return (ft_free_secure(line));
 		if (read_otc != 0)
 		{
-			find_nl = ft_find_newline(save);
-			line = ft_strljoin(line, save, find_nl);
-			ft_pending_save(save, find_nl);
+			find_nl = ft_find_newline(save[fd]);
+			line = ft_strljoin(line, save[fd], find_nl);
+			ft_pending_save(save[fd], find_nl);
 		}
 	}
 	return (line);

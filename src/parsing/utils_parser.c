@@ -6,7 +6,7 @@
 /*   By: mickmart <mickmart@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 12:21:15 by mickmart          #+#    #+#             */
-/*   Updated: 2025/04/16 23:17:08 by mickmart         ###   ########.fr       */
+/*   Updated: 2025/04/18 16:02:41 by mickmart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	get_width(char *filename, t_fdf *fdf)
 	if (fd < 0)
 		cleanup_exit(fdf, EXIT_FAILURE, "Cannot open file");
 	line = get_next_line(fd);
-	split = ft_split(line, ' ');
+	split = ft_split(line, " \n");
 	if (!split)
 		cleanup_exit(fdf, EXIT_FAILURE, "Invalid map dimensions");
 	fdf->map->width = 0;

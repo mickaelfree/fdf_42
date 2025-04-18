@@ -6,98 +6,105 @@
 /*   By: mickmart <mickmart@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 13:17:50 by mickmart          #+#    #+#             */
-/*   Updated: 2025/04/16 13:17:55 by mickmart         ###   ########.fr       */
+/*   Updated: 2025/04/18 18:00:12 by mickmart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/fdf.h"
+#include <sys/types.h>
 
-static size_t	count_word(char const *s, char c)
+void	free_str_tab(char **tab, int limit)
+{
+	int	i;
+
+	i = -1;
+	while (++i < limit)
+		free(tab[i]);
+	free(tab);
+}
+
+ssize_t	calc_nb_words(char const *str, char *charset)
 {
 	size_t	count;
-	size_t	i;
+	int		is_word;
 
-	i = 0;
 	count = 0;
-	while (s[i])
+	is_word = 0;
+	if (!str || !charset)
+		return (0);
+	while (*str)
 	{
-		while (s[i] == c && s[i])
-			i++;
-		if (s[i])
-			count++;
-		while (s[i] != c && s[i])
-			i++;
+		if (pos_in_str(charset, *str) == -1)
+		{
+			if (!is_word)
+			{
+				count++;
+				is_word = 1;
+			}
+		}
+		else
+			is_word = 0;
+		str++;
 	}
 	return (count);
 }
 
-static void	free_tab(char **tab, size_t w)
+char	*fill_word(char *word, char const *s, char *delim)
 {
-	size_t	i;
+	int	i;
 
-	i = 0;
-	while (i < w)
-	{
-		free(tab[i]);
-		i++;
-	}
-	free(tab);
+	i = -1;
+	while (s[++i] && (pos_in_str(delim, s[i])) == -1)
+		word[i] = s[i];
+	word[i] = '\0';
+	return (word);
 }
 
-static char	**ft_tab(char const *s, char c)
+int	alloc_n_write(char **res, char const *s, char *delim)
 {
-	char	**tab;
+	int	i;
+	int	old_i;
+	int	i_res;
+
+	i = 0;
+	i_res = 0;
+	while (s[i])
+	{
+		while (s[i] && (pos_in_str(delim, s[i])) >= 0)
+			i++;
+		old_i = i;
+		while (s[i] && pos_in_str(delim, s[i]) == -1)
+			i++;
+		if (old_i < i)
+		{
+			res[i_res] = malloc((i - old_i + 1) * sizeof(char));
+			if (!res[i_res])
+				return (i_res);
+			fill_word(res[i_res], s + old_i, delim);
+			i_res++;
+		}
+	}
+	return (-1);
+}
+
+char	**ft_split(char const *s, char *delim)
+{
+	char	**res;
+	int		nb_words;
+	int		i_alloc_res;
 
 	if (!s)
 		return (NULL);
-	tab = malloc(sizeof(char *) * (count_word(s, c) + 1));
-	if (!tab)
+	nb_words = calc_nb_words(s, delim);
+	res = malloc((nb_words + 1) * sizeof(char *));
+	if (!res)
 		return (NULL);
-	return (tab);
-}
-
-static char	**ft_tabword(char **tab, size_t w, const char *s, char c)
-{
-	size_t	len;
-
-	len = 0;
-	while (s[len] && s[len] != c)
-		len++;
-	tab[w] = malloc(len + 1);
-	if (!tab[w])
+	i_alloc_res = alloc_n_write(res, s, delim);
+	if (i_alloc_res != -1)
 	{
-		free_tab(tab, w);
+		free_str_tab(res, i_alloc_res);
 		return (NULL);
 	}
-	ft_strlcpy(tab[w], s, len + 1);
-	return (tab);
-}
-
-char	**ft_split(char const *s, char c)
-{
-	char	**tab;
-	size_t	len;
-	size_t	w;
-
-	tab = ft_tab(s, c);
-	if (!tab)
-		return (NULL);
-	w = 0;
-	while (*s)
-	{
-		if (*s != c)
-		{
-			len = 0;
-			while (s[len] && s[len] != c)
-				len++;
-			tab = ft_tabword(tab, w++, s, c);
-			if (!tab)
-				return (NULL);
-			s += len;
-		}
-		else
-			s++;
-	}
-	tab[w] = NULL;
-	return (tab);
+	res[nb_words] = NULL;
+	return (res);
 }
