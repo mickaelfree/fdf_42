@@ -71,9 +71,9 @@ void	parse_map(char *filename, t_fdf *fdf)
 	init_map_points(fdf);
 	y = 0;
 	line = get_next_line(fd);
-	line = get_next_line(fd);
 	while (line && y < fdf->map->height)
 	{
+		__builtin_printf("line %d: %s\n", y, line);
 		fill_matrice(line, fdf, y++);
 		line = get_next_line(fd);
 	}

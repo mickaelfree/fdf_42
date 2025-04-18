@@ -23,5 +23,5 @@ int	ft_isspace(int c)
 
 int	ft_ishexformat(int o, int x)
 {
-	return (o == '0' || (x == 'x' && x == 'X'));
+	return (o == '0' && (x == 'x' || x == 'X'));
 }

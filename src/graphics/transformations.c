@@ -28,7 +28,7 @@ void	apply_transformations(int *x, int *y, int z, t_map *map)
 	if ((WINDOW_HEIGHT / ((map->width + map->height) >> 1)) < scale)
 		scale = WINDOW_HEIGHT / ((map->width + map->height) >> 1);
 	temp_x = (*x - *y) * scale;
-	temp_y = (*x + *y) * (scale >> 1) - z * (scale / 3);
+	temp_y = (*x + *y) * (scale / 2) - z * (scale / 3);
 	*x = temp_x + (WINDOW_WIDTH >> 1);
 	*y = temp_y + (WINDOW_HEIGHT >> 1);
 }
