@@ -36,7 +36,7 @@ static int	is_valid_format(char *line)
 			digit_found = 1;
 		else if (line[i] == ',' && digit_found)
 		{
-			if (ft_ishexformat(line[i + 1], line[i + 2]))
+			if (!ft_ishexformat(line[i + 1], line[i + 2]))
 				return (0);
 			i += 2;
 		}

@@ -21,7 +21,7 @@ int	ft_isspace(int c)
 			|| c == '\v'));
 }
 
-int	ft_ishexformat(int o, int x)
+int	ft_ishexformat(char o,char x)
 {
 	return (o == '0' && (x == 'x' || x == 'X'));
 }
