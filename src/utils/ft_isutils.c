@@ -27,7 +27,7 @@ int	ft_ishex(char c)
 			&& c <= 'F'));
 }
 
-int	ft_ishexformat(char *hex)
+int	ft_isnothexformat(char *hex)
 {
 	int	i;
 

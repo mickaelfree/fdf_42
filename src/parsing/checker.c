@@ -40,7 +40,7 @@ static int	is_valid_format(char *line)
 			digit_found = 1;
 		else if (line[i] == ',' && digit_found)
 		{
-			if (ft_ishexformat(&line[i + 1]))
+			if (ft_isnothexformat(&line[i + 1]))
 				return (0);
 			i += 8;
 		}

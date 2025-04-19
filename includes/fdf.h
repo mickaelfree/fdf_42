@@ -91,7 +91,7 @@ char		**ft_split(char const *s, char *c);
 size_t		ft_strlcpy(char *dst, const char *src, size_t sz);
 int			ft_isdigit(char c);
 int			ft_isspace(char c);
-int			ft_ishexformat(char *hex);
+int			ft_isnothexformat(char *hex);
 int			ft_strcmp(const char *s1, const char *s2);
 char		*ft_strrchr(const char *s, int c);
 
