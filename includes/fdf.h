@@ -6,7 +6,7 @@
 /*   By: mickmart <mickmart@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 19:13:17 by mickmart          #+#    #+#             */
-/*   Updated: 2025/04/17 17:13:36 by mickmart         ###   ########.fr       */
+/*   Updated: 2025/04/18 18:14:35 by mickmart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,11 +85,13 @@ char		*ft_free_secure(char *ptr);
 char		*ft_add_str(char *dest, char *s1, char *s2, ssize_t end);
 char		*get_next_line(int fd);
 int			ft_atoi(const char *str);
-char		**ft_split(char const *s, char c);
+int			ft_ishexformat(char *hex);
+int			pos_in_str(char *str, char c);
+char		**ft_split(char const *s, char *c);
 size_t		ft_strlcpy(char *dst, const char *src, size_t sz);
-int			ft_isdigit(int c);
-int			ft_isspace(int c);
-int			ft_ishexformat(int o, int x);
+int			ft_isdigit(char c);
+int			ft_isspace(char c);
+int			ft_ishexformat(char *hex);
 int			ft_strcmp(const char *s1, const char *s2);
 char		*ft_strrchr(const char *s, int c);
 
