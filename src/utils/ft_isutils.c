@@ -38,10 +38,10 @@ int	ft_ishexformat(char *hex)
 	{
 		hex += 2;
 		if (!hex[0])
-			return (1);
+			return (0);
 		while (hex[i])
 		{
-			if (ft_ishex(hex[i]) || i > 8)
+			if (!ft_ishex(hex[i]) || i > 6)
 				return (0);
 			i++;
 		}

@@ -16,8 +16,12 @@ static int	check_file_extension(char *filename)
 {
 	char	*ext;
 
+	if (!filename)
+		return (0);
 	ext = ft_strrchr(filename, '.');
-	if (!ext || ft_strcmp(ext, ".fdf") != 0)
+	if (!ext)
+		return (0);
+	if (ft_strcmp(ext, ".fdf") != 0)
 		return (0);
 	return (access(filename, R_OK) != -1);
 }
