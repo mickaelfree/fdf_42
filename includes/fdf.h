@@ -17,7 +17,7 @@
 #  define BUFFER_SIZE 1024
 # endif
 
-# include "../lib/mlx/mlx.h"
+# include "../libs/mlx/mlx.h"
 # include <X11/keysym.h>
 # include <fcntl.h>
 # include <math.h>

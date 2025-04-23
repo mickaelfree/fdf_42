@@ -1,6 +1,6 @@
 NAME = fdf
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -I./includes -g3
+CFLAGS = -Wall -Wextra -Werror -I./includes
 
 # Sources
 SRC_DIR = src/
@@ -29,7 +29,7 @@ OBJ_DIR = obj/
 OBJS = $(SRCS:$(SRC_DIR)%.c=$(OBJ_DIR)%.o)
 
 # Libraries
-MLX_DIR = lib/mlx/
+MLX_DIR = libs/mlx/
 MLX = $(MLX_DIR)libmlx.a
 
 # Includes
