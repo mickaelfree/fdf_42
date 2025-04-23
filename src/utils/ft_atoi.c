@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mickmart <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mickmart <mickmart@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/04 16:48:53 by mickmart          #+#    #+#             */
-/*   Updated: 2025/04/20 17:37:45 by mickmart         ###   ########.fr       */
+/*   Created: 2025/04/23 14:04:51 by mickmart          #+#    #+#             */
+/*   Updated: 2025/04/23 14:18:55 by mickmart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,3 @@ int	ft_atoi(const char *str, int *overflow)
 	}
 	return (total);
 }
-/*
-int	main(void)
-{
-  printf("%d\n",ft_atoi("-8430749809837"));
-  printf("%d\n",INT_MAX);
-  printf("%d\n",INT_MIN);
-}
- */
