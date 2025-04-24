@@ -24,6 +24,7 @@ SRCS = $(SRC_DIR)core/main.c \
        $(SRC_DIR)utils/ft_strrchr.c \
        $(SRC_DIR)utils/ft_isutils.c \
        $(SRC_DIR)utils/ft_abs.c \
+       $(SRC_DIR)utils/ft_memset.c \
 
 # Objects
 OBJ_DIR = obj/

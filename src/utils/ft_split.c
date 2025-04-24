@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "../../includes/fdf.h"
-#include <sys/types.h>
 
 void	free_str_tab(char **tab, int limit)
 {

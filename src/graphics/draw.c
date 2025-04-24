@@ -6,12 +6,11 @@
 /*   By: mickmart <mickmart@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 11:43:24 by mickmart          #+#    #+#             */
-/*   Updated: 2025/04/24 16:10:08 by mickmart         ###   ########.fr       */
+/*   Updated: 2025/04/24 19:45:25 by mickmart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/fdf.h"
-#include <string.h>
 
 static void	draw_line_setup(t_point p1, t_point p2, int *params)
 {
@@ -57,8 +56,6 @@ static void	draw_horizontal_line(t_fdf *fdf, int i, int j)
 {
 	t_point	current;
 	t_point	next;
-        memset(&current, 0, sizeof(t_point));
-        memset(&next, 0, sizeof(t_point));
 
 	current = fdf->map->points[i][j];
 	apply_transformations(&current.x, &current.y, current.z, fdf->map);
@@ -74,8 +71,6 @@ static void	draw_vertical_line(t_fdf *fdf, int i, int j)
 {
 	t_point	current;
 	t_point	next;
-        memset(&current, 0, sizeof(t_point));
-        memset(&next, 0, sizeof(t_point));
 
 	current = fdf->map->points[i][j];
 	apply_transformations(&current.x, &current.y, current.z, fdf->map);

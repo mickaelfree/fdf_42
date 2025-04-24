@@ -6,7 +6,7 @@
 /*   By: mickmart <mickmart@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 19:13:17 by mickmart          #+#    #+#             */
-/*   Updated: 2025/04/24 16:05:53 by mickmart         ###   ########.fr       */
+/*   Updated: 2025/04/24 19:36:42 by mickmart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,14 +57,15 @@ typedef struct s_fdf
 }			t_fdf;
 
 /* Core functions */
-t_fdf		*init_fdf(void);
+t_fdf		*setmem_fdf(t_fdf *fdf);
+t_fdf		*init_fdf(t_fdf *fdf);
 
 /* Parsing functions */
 
 int			checker_map(char *filename);
 void		ft_free_split(char **split);
-void		get_width(char *filename, t_fdf *fdf);
-void		get_height(char *filename, t_fdf *fdf);
+void		get_width(char *filename, t_fdf *fdf, int fd);
+void		get_height(char *filename, t_fdf *fdf, int fd);
 void		parse_map(char *filename, t_fdf *fdf);
 
 /* Graphics functions */
@@ -78,8 +79,8 @@ int			handle_key(int keycode, t_fdf *fdf);
 int			handle_close(t_fdf *fdf);
 
 /* Utils */
-void	cleanup_exit(t_fdf *fdf, int status, char *msg,int fd);
-void	*safe_malloc(size_t size, t_fdf *fdf,int fd);
+void		cleanup_exit(t_fdf *fdf, int status, char *msg, int fd);
+void		*safe_malloc(size_t size, t_fdf *fdf, int fd);
 size_t		ft_strlen(const char *s);
 char		*ft_free_secure(char *ptr);
 char		*ft_add_str(char *dest, char *s1, char *s2, ssize_t end);
@@ -95,5 +96,6 @@ int			ft_isnothexformat(char *hex);
 int			ft_strcmp(const char *s1, const char *s2);
 char		*ft_strrchr(const char *s, int c);
 int			ft_abs(int nb);
+void		*ft_memset(void *s, int c, size_t n);
 
 #endif

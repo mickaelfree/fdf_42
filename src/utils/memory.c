@@ -12,12 +12,12 @@
 
 #include "../../includes/fdf.h"
 
-void	*safe_malloc(size_t size, t_fdf *fdf,int fd)
+void	*safe_malloc(size_t size, t_fdf *fdf, int fd)
 {
 	void	*ptr;
 
 	ptr = malloc(size);
 	if (!ptr)
-		cleanup_exit(fdf, EXIT_FAILURE, "Memory allocation failed",fd);
+		cleanup_exit(fdf, EXIT_FAILURE, "Memory allocation failed", fd);
 	return (ptr);
 }

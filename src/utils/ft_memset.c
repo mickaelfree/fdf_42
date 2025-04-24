@@ -1,20 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_key.c                                       :+:      :+:    :+:   */
+/*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mickmart <mickmart@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/08 11:44:08 by mickmart          #+#    #+#             */
-/*   Updated: 2025/04/24 17:52:04 by mickmart         ###   ########.fr       */
+/*   Created: 2025/04/24 17:07:53 by mickmart          #+#    #+#             */
+/*   Updated: 2025/04/24 17:07:56 by mickmart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/fdf.h"
 
-int	handle_key(int keycode, t_fdf *fdf)
+void	*ft_memset(void *s, int c, size_t n)
 {
-	if (keycode == XK_Escape)
-		cleanup_exit(fdf, EXIT_SUCCESS, "Window closed", 0);
-	return (EXIT_SUCCESS);
+	unsigned char	*set;
+
+	set = (unsigned char *)s;
+	while (n--)
+		*set++ = c;
+	return (s);
 }
