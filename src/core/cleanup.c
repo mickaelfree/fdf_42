@@ -6,7 +6,7 @@
 /*   By: mickmart <mickmart@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 11:44:45 by mickmart          #+#    #+#             */
-/*   Updated: 2025/04/14 16:27:31 by mickmart         ###   ########.fr       */
+/*   Updated: 2025/04/24 15:52:33 by mickmart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,10 @@ void	cleanup(t_fdf *fdf)
 	free(fdf);
 }
 
-void	cleanup_exit(t_fdf *fdf, int status, char *msg)
+void	cleanup_exit(t_fdf *fdf, int status, char *msg,int fd)
 {
+        if (fd>2)
+                close(fd);
 	cleanup(fdf);
 	if (status)
 		ft_putstr_fd("Error: ", 2);

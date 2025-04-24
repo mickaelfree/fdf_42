@@ -6,7 +6,7 @@
 /*   By: mickmart <mickmart@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 19:13:17 by mickmart          #+#    #+#             */
-/*   Updated: 2025/04/20 17:32:14 by mickmart         ###   ########.fr       */
+/*   Updated: 2025/04/24 16:05:53 by mickmart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,8 @@ int			handle_key(int keycode, t_fdf *fdf);
 int			handle_close(t_fdf *fdf);
 
 /* Utils */
-void		cleanup_exit(t_fdf *fdf, int status, char *msg);
-void		*safe_malloc(size_t size, t_fdf *fdf);
+void	cleanup_exit(t_fdf *fdf, int status, char *msg,int fd);
+void	*safe_malloc(size_t size, t_fdf *fdf,int fd);
 size_t		ft_strlen(const char *s);
 char		*ft_free_secure(char *ptr);
 char		*ft_add_str(char *dest, char *s1, char *s2, ssize_t end);
@@ -94,5 +94,6 @@ int			ft_isspace(char c);
 int			ft_isnothexformat(char *hex);
 int			ft_strcmp(const char *s1, const char *s2);
 char		*ft_strrchr(const char *s, int c);
+int			ft_abs(int nb);
 
 #endif

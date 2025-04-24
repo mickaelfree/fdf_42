@@ -6,7 +6,7 @@
 /*   By: mickmart <mickmart@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 11:45:23 by mickmart          #+#    #+#             */
-/*   Updated: 2025/04/20 17:38:23 by mickmart         ###   ########.fr       */
+/*   Updated: 2025/04/24 16:48:55 by mickmart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,19 +27,22 @@ static void	fill_points(t_map *map, char **split, int y, int *i)
 	}
 }
 
-static void	init_map_points(t_fdf *fdf)
+static void	init_map_points(t_fdf *fdf, int fd)
 {
 	int	y;
 	int	size;
 
 	size = sizeof(t_point) * fdf->map->width;
-	fdf->map->points = safe_malloc(sizeof(t_point *) * fdf->map->height, fdf);
+	fdf->map->points = safe_malloc(sizeof(t_point *) * fdf->map->height, fdf,
+			fd);
 	y = 0;
 	while (y < fdf->map->height)
 	{
-		fdf->map->points[y] = safe_malloc(size, fdf);
+		fdf->map->points[y] = safe_malloc(size, fdf, fd);
 		y++;
 	}
+
+
 }
 
 void	fill_matrice(char *line, t_fdf *fdf, int y, int fd)
@@ -50,16 +53,12 @@ void	fill_matrice(char *line, t_fdf *fdf, int y, int fd)
 	overflow = 0;
 	split = ft_split(line, " ");
 	if (!split)
-		cleanup_exit(fdf, EXIT_FAILURE, "Invalid map dimensions");
+		cleanup_exit(fdf, EXIT_FAILURE, "Invalid map dimensions", fd);
 	fill_points(fdf->map, split, y, &overflow);
 	ft_free_split(split);
 	free(line);
 	if (overflow == 1)
-	{
-		if (close(fd) == -1)
-			cleanup_exit(fdf, EXIT_FAILURE, "Cannot close file after overflow");
-		cleanup_exit(fdf, EXIT_FAILURE, "Overflow");
-	}
+		cleanup_exit(fdf, EXIT_FAILURE, "Overflow", fd);
 }
 
 void	parse_map(char *filename, t_fdf *fdf)
@@ -70,15 +69,17 @@ void	parse_map(char *filename, t_fdf *fdf)
 
 	fd = open(filename, O_RDONLY);
 	if (fd == -1)
-		cleanup_exit(fdf, EXIT_FAILURE, "Cannot open file");
-	fdf->map = safe_malloc(sizeof(t_map), fdf);
+		cleanup_exit(fdf, EXIT_FAILURE, "Cannot open file", 0);
+	fdf->map = safe_malloc(sizeof(t_map), fdf, fd);
 	get_height(filename, fdf);
 	get_width(filename, fdf);
 	if (!fdf->map->height || !fdf->map->width)
-		cleanup_exit(fdf, EXIT_FAILURE, "Invalid map dimensions");
-	init_map_points(fdf);
+		cleanup_exit(fdf, EXIT_FAILURE, "Invalid map dimensions", fd);
+	init_map_points(fdf, fd);
 	y = 0;
-	line = get_next_line(fd);
+	line =get_next_line(fd);
+        if (!line )
+            cleanup_exit(fdf, EXIT_FAILURE, "parsing failed", fd);
 	while (line && y < fdf->map->height)
 	{
 		fill_matrice(line, fdf, y++, fd);
@@ -86,6 +87,5 @@ void	parse_map(char *filename, t_fdf *fdf)
 	}
 	if (line)
 		free(line);
-	if (close(fd) == -1)
-		cleanup_exit(fdf, EXIT_FAILURE, "Cannot close file");
+	close(fd);
 }

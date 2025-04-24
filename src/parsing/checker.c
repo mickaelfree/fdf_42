@@ -6,7 +6,7 @@
 /*   By: mickmart <mickmart@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 16:22:55 by mickmart          #+#    #+#             */
-/*   Updated: 2025/04/20 17:36:50 by mickmart         ###   ########.fr       */
+/*   Updated: 2025/04/24 16:06:59 by mickmart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,12 @@ static int	check_file_extension(char *filename)
 	char	*ext;
 
 	if (!filename)
-		return (0);
+		return (EXIT_SUCCESS);
 	ext = ft_strrchr(filename, '.');
 	if (!ext)
-		return (0);
+		return (EXIT_SUCCESS);
 	if (ft_strcmp(ext, ".fdf") != 0)
-		return (0);
+		return (EXIT_SUCCESS);
 	return (access(filename, R_OK) != -1);
 }
 
@@ -41,15 +41,15 @@ static int	is_valid_format(char *line)
 		{
 			ptr++;
 			if (*ptr == '\0' || *ptr == '\n' || ft_isspace(*ptr))
-				return (0);
+				return (EXIT_SUCCESS);
 			if (ft_isnothexformat(ptr))
-				return (0);
+				return (EXIT_SUCCESS);
 			while (*ptr && !ft_isspace(*ptr))
 				ptr++;
 			continue ;
 		}
 		else if (!ft_isspace(*ptr) && *ptr != '\n')
-			return (0);
+			return (EXIT_SUCCESS);
 		ptr++;
 	}
 	return (digit_found);
@@ -90,13 +90,17 @@ static int	check_map_content(int fd, char *line)
 	{
 		if (!is_valid_format(line))
 		{
+			close(fd);
 			free(line);
-			return (0);
+			return (EXIT_SUCCESS);
 		}
 		current_width = count_elements(line);
 		free(line);
 		if (current_width != first_width)
-			return (0);
+		{
+			close(fd);
+			return (EXIT_SUCCESS);
+		}
 		line = get_next_line(fd);
 	}
 	return (first_width > 0);
@@ -109,15 +113,21 @@ int	checker_map(char *filename)
 	char	*line;
 
 	if (!filename || !check_file_extension(filename))
-		return (0);
+		return (EXIT_SUCCESS);
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
-		return (0);
+		return (EXIT_SUCCESS);
 	line = get_next_line(fd);
-	if (!line || !is_valid_format(line))
+	if (!line)
+	{
+		close(fd);
+		return (EXIT_SUCCESS);
+	}
+	if (!is_valid_format(line))
 	{
 		free(line);
-		return (0);
+		close(fd);
+		return (EXIT_SUCCESS);
 	}
 	result = check_map_content(fd, line);
 	close(fd);

@@ -6,16 +6,17 @@
 /*   By: mickmart <mickmart@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 11:43:24 by mickmart          #+#    #+#             */
-/*   Updated: 2025/04/13 21:05:03 by mickmart         ###   ########.fr       */
+/*   Updated: 2025/04/24 16:10:08 by mickmart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/fdf.h"
+#include <string.h>
 
 static void	draw_line_setup(t_point p1, t_point p2, int *params)
 {
-	params[0] = abs(p2.x - p1.x);
-	params[1] = abs(p2.y - p1.y);
+	params[0] = ft_abs(p2.x - p1.x);
+	params[1] = ft_abs(p2.y - p1.y);
 	if (p1.x < p2.x)
 		params[2] = 1;
 	else
@@ -56,6 +57,8 @@ static void	draw_horizontal_line(t_fdf *fdf, int i, int j)
 {
 	t_point	current;
 	t_point	next;
+        memset(&current, 0, sizeof(t_point));
+        memset(&next, 0, sizeof(t_point));
 
 	current = fdf->map->points[i][j];
 	apply_transformations(&current.x, &current.y, current.z, fdf->map);
@@ -71,6 +74,8 @@ static void	draw_vertical_line(t_fdf *fdf, int i, int j)
 {
 	t_point	current;
 	t_point	next;
+        memset(&current, 0, sizeof(t_point));
+        memset(&next, 0, sizeof(t_point));
 
 	current = fdf->map->points[i][j];
 	apply_transformations(&current.x, &current.y, current.z, fdf->map);

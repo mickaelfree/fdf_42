@@ -1,5 +1,5 @@
 NAME = fdf
-CC = cc
+CC = cc -g3
 CFLAGS = -Wall -Wextra -Werror -I./includes
 
 # Sources
@@ -23,6 +23,7 @@ SRCS = $(SRC_DIR)core/main.c \
        $(SRC_DIR)utils/ft_strcmp.c \
        $(SRC_DIR)utils/ft_strrchr.c \
        $(SRC_DIR)utils/ft_isutils.c \
+       $(SRC_DIR)utils/ft_abs.c \
 
 # Objects
 OBJ_DIR = obj/
@@ -38,17 +39,17 @@ INCLUDES = -I./includes -I$(MLX_DIR)
 # Libraries flags
 LIBS = -L$(MLX_DIR) -lmlx -lXext -lX11 -lm
 
-all: $(NAME)
+all: lib $(NAME)
 
-$(NAME): $(MLX) $(OBJS)
+$(NAME): $(OBJS)
 	$(CC) $(OBJS) $(LIBS) -o $(NAME)
 
-$(OBJ_DIR)%.o: $(SRC_DIR)%.c Makefile ./includes/fdf.h
+$(OBJ_DIR)%.o: $(SRC_DIR)%.c Makefile ./includes/fdf.h $(MLX)
 	@mkdir -p $(@D)
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
-$(MLX):
-	make -C $(MLX_DIR)
+lib:
+	@make -C $(MLX_DIR)
 
 clean:
 	rm -rf $(OBJ_DIR)
@@ -60,5 +61,5 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re lib
 
